@@ -13,9 +13,12 @@
         android:theme="@style/Theme.MADAssignment"
         tools:targetApi="31">
         <activity
+            android:name=".LevelZero"
+            android:exported="false" />
+        <activity
             android:name=".FinalScore"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".LevelOne"
             android:exported="false"
