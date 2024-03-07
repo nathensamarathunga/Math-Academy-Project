@@ -56,6 +56,7 @@ public class LevelSelect extends AppCompatActivity {
                 // Start LevelOne activity
                 Intent intent = new Intent(LevelSelect.this, LevelOne.class);
                 intent.putExtra("timePerQuestion", -1);
+                intent.putExtra("level", 1);
                 startActivity(intent);
             }
         });

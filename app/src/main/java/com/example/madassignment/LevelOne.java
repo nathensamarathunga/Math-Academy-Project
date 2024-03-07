@@ -98,29 +98,37 @@ public class LevelOne extends AppCompatActivity {
             }
         });
 
-        // Start the timer for the first question
+        //start timer
+
         if (timePerQuestion != -1) {
+            // For other levels, start the timer
             startTimer();
+        } else {
+            // For level 1, indicate unlimited time
+            textViewTimer.setText("Time : ∞");
         }
     }
 
     private void startTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new CountDownTimer(timePerQuestion * 1000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Update timer display
-                textViewTimer.setText("Time : " + millisUntilFinished / 1000 + "s");
+        if (timePerQuestion != -1) {
+            if (timer != null) {
+                timer.cancel();
             }
+            timer = new CountDownTimer(timePerQuestion * 1000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    // Update timer display
+                    textViewTimer.setText("Time : " + millisUntilFinished / 1000 + "s");
+                }
 
-            public void onFinish() {
-                // Time's up, handle accordingly
-                textViewTimer.setText("Time's Up!");
-                checkAnswer(-1); // Pass -1 as answer to indicate time's up
-            }
-        }.start();
+                public void onFinish() {
+                    // Time's up, handle accordingly
+                    textViewTimer.setText("Time's Up!");
+                    checkAnswer(-1); // Pass -1 as answer to indicate time's up
+                }
+            }.start();
+        }
     }
+
 
     private void generateQuestion() {
         Random random = new Random();
@@ -187,7 +195,11 @@ public class LevelOne extends AppCompatActivity {
     }
 
     private void checkAnswer(int answer) {
-        timer.cancel(); // Cancel the timer
+        if (timePerQuestion != -1) {
+            if (timer != null) {
+                timer.cancel();
+            }
+        }
 
         if (answer == correctAnswer) {
             score += 10; // Increase score by 10 for each correct answer
@@ -199,6 +211,9 @@ public class LevelOne extends AppCompatActivity {
             generateQuestion();
             questionCount++;
             updateQuestionCount();
+            if (timePerQuestion != -1) {
+                startTimer();
+            }
         }
     }
 
