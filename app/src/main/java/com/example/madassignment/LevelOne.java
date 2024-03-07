@@ -111,7 +111,7 @@ public class LevelOne extends AppCompatActivity {
         timer = new CountDownTimer(timePerQuestion * 1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Update timer display
-                textViewTimer.setText("Time Remaining: " + millisUntilFinished / 1000 + "s");
+                textViewTimer.setText("Time : " + millisUntilFinished / 1000 + "s");
             }
 
             public void onFinish() {

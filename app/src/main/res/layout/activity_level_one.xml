@@ -9,10 +9,12 @@
 
     <VideoView
         android:id="@+id/level_background_video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_width="731dp"
+        android:layout_height="411dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -25,10 +27,8 @@
         android:alpha="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/question_page_number_background_v1" />
 
     <Button
@@ -50,9 +50,9 @@
         android:id="@+id/textViewOperator"
         android:layout_width="40dp"
         android:layout_height="64dp"
-        android:layout_marginStart="345dp"
+        android:layout_marginStart="346dp"
         android:layout_marginTop="118dp"
-        android:layout_marginEnd="346dp"
+        android:layout_marginEnd="345dp"
         android:layout_marginBottom="229dp"
         android:fontFamily="@font/mochiy"
         android:text="+"
@@ -130,25 +130,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/question_counter_l1"
-        android:layout_width="259dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="254dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="254dp"
-        android:layout_marginBottom="341dp"
-        android:fontFamily="@font/mochiy"
-        android:text="Question 1"
-        android:textAlignment="center"
-        android:textColor="#6037A3"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
+    <!-- <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -209,7 +192,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.95" />-->
 
     <Button
         android:id="@+id/to_menu_level_one_exit"
@@ -219,14 +202,14 @@
         android:layout_marginTop="347dp"
         android:layout_marginEnd="627dp"
         android:layout_marginBottom="16dp"
-        android:text="Exit"
         android:fontFamily="@font/mochiy"
+        android:text="Exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
+    <!--<androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -238,21 +221,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.88" />
+        app:layout_constraintGuide_percent="0.88" />-->
+
+    <TextView
+        android:id="@+id/question_counter_l1"
+        android:layout_width="259dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="456dp"
+        android:layout_marginBottom="339dp"
+        android:fontFamily="@font/mochiy"
+        android:text="Question 1"
+        android:textAlignment="center"
+        android:textColor="#6037A3"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewTimer"
-        android:layout_width="262dp"
-        android:layout_height="70dp"
+        android:layout_width="256dp"
+        android:layout_height="57dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="453dp"
-        android:layout_marginBottom="325dp"
+        android:layout_marginStart="459dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="339dp"
         android:fontFamily="@font/mochiy"
-        android:text="Time Remaining : 20"
+        android:text="Time : 20s"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textColor="#6037A3"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
