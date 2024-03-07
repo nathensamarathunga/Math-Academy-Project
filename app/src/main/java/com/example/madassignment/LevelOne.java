@@ -2,6 +2,7 @@ package com.example.madassignment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,8 +12,6 @@ import android.widget.RelativeLayout;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-
 import java.util.Arrays;
 import java.util.Random;
 
@@ -26,6 +25,10 @@ public class LevelOne extends AppCompatActivity {
     private int questionCount = 1;
     private TextView questionCountTextView;
     private boolean quizEnded = false;
+    private int timePerQuestion; // Time per question in seconds
+    private CountDownTimer timer;
+    private TextView textViewTimer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,35 +43,40 @@ public class LevelOne extends AppCompatActivity {
         buttonChoice2 = findViewById(R.id.buttonChoice2);
         buttonChoice3 = findViewById(R.id.buttonChoice3);
         questionCountTextView = findViewById(R.id.question_counter_l1);
+        textViewTimer = findViewById(R.id.textViewTimer);
 
+        // Receive time variable from previous activity
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            timePerQuestion = extras.getInt("timePerQuestion");
+        }
+
+        // Set up video background
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.background_level_01);
         videoViewBackground.setVideoURI(videoUri);
         videoViewBackground.start();
-
-        // Loop the video
         videoViewBackground.setOnCompletionListener(mediaPlayer -> videoViewBackground.start());
-
-        // Set the layout parameters of VideoView to match the parent (fill the screen)
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT
         );
         videoViewBackground.setLayoutParams(layoutParams);
 
+        // Set up exit button
         Button exitButton = findViewById(R.id.to_menu_level_one_exit);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Define the action to start the HomePage activity - modified to level select
                 Intent intent = new Intent(LevelOne.this, LevelSelect.class);
                 startActivity(intent);
-                finish(); // Optional: Finish the current activity to prevent the user from going back
+                finish();
             }
         });
 
         updateQuestionCount();
         generateQuestion();
 
+        // Set up button click listeners
         buttonChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +97,29 @@ public class LevelOne extends AppCompatActivity {
                 checkAnswer(Integer.parseInt(buttonChoice3.getText().toString()));
             }
         });
+
+        // Start the timer for the first question
+        if (timePerQuestion != -1) {
+            startTimer();
+        }
+    }
+
+    private void startTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new CountDownTimer(timePerQuestion * 1000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Update timer display
+                textViewTimer.setText("Time Remaining: " + millisUntilFinished / 1000 + "s");
+            }
+
+            public void onFinish() {
+                // Time's up, handle accordingly
+                textViewTimer.setText("Time's Up!");
+                checkAnswer(-1); // Pass -1 as answer to indicate time's up
+            }
+        }.start();
     }
 
     private void generateQuestion() {
@@ -140,6 +171,9 @@ public class LevelOne extends AppCompatActivity {
         buttonChoice1.setText(String.valueOf(choices[0]));
         buttonChoice2.setText(String.valueOf(choices[1]));
         buttonChoice3.setText(String.valueOf(choices[2]));
+
+        // Start the timer for the next question
+        startTimer();
     }
 
     private void shuffleArray(int[] array) {
@@ -153,66 +187,30 @@ public class LevelOne extends AppCompatActivity {
     }
 
     private void checkAnswer(int answer) {
+        timer.cancel(); // Cancel the timer
+
         if (answer == correctAnswer) {
             score += 10; // Increase score by 10 for each correct answer
         }
 
-        if (questionCount >= 10 && !quizEnded) { // Check if the 10th question is reached and the quiz hasn't ended
-            showFinalScore(); // Start FinalScore activity
-        } else if (!quizEnded) { // Generate a new question only if the quiz hasn't ended
+        if (questionCount >= 10 && !quizEnded) {
+            showFinalScore();
+        } else if (!quizEnded) {
             generateQuestion();
-            questionCount++; // Increment question count after generating a new question
+            questionCount++;
             updateQuestionCount();
         }
     }
 
-
     private void showFinalScore() {
-        quizEnded = true; // Set quizEnded to true to prevent further questions
-        // Start a new activity to display the final score
+        quizEnded = true;
         Intent intent = new Intent(LevelOne.this, FinalScore.class);
-        intent.putExtra("score", score); // Pass the score to the new activity
+        intent.putExtra("score", score);
         startActivity(intent);
-        finish(); // Finish the current activity to prevent the user from going back
+        finish();
     }
-
 
     private void updateQuestionCount() {
-        // Update the question count TextView
         questionCountTextView.setText("Question : " + questionCount);
     }
-
-
-    /*
-    private void showScorePopup() {
-        if (score > 60) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Great Job!")
-                    .setMessage("Your total score: " + score)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            // Reset variables and finish activity or perform other actions
-                            finish();
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Try Harder!")
-                    .setMessage("Your total score: " + score)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            // Reset variables and finish activity or perform other actions
-                            finish();
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
-        }
-    }
-    */
-
 }

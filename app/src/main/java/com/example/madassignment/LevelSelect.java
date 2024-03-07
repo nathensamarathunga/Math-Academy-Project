@@ -48,13 +48,38 @@ public class LevelSelect extends AppCompatActivity {
             }
         });
 
-        // Image button to select level
+        // Image button 1 to select level
         ImageButton levelImageButton = findViewById(R.id.image_level_0_select_page);
         levelImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start LevelOne activity
                 Intent intent = new Intent(LevelSelect.this, LevelOne.class);
+                intent.putExtra("timePerQuestion", -1);
+                startActivity(intent);
+            }
+        });
+
+        // Image button 2 to select level
+        ImageButton level1ImageButton = findViewById(R.id.image_level_1_select_page);
+        level1ImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start LevelOne activity
+                Intent intent = new Intent(LevelSelect.this, LevelOne.class);
+                intent.putExtra("timePerQuestion", 20);
+                startActivity(intent);
+            }
+        });
+
+        // Image button 3 to select level
+        ImageButton level2ImageButton = findViewById(R.id.image_level_2_select_page);
+        level2ImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start LevelOne activity
+                Intent intent = new Intent(LevelSelect.this, LevelOne.class);
+                intent.putExtra("timePerQuestion", 10);
                 startActivity(intent);
             }
         });
