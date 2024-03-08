@@ -14,6 +14,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import java.util.Arrays;
 import java.util.Random;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+
 
 public class LevelOne extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class LevelOne extends AppCompatActivity {
     private int timePerQuestion; // Time per question in seconds
     private CountDownTimer timer;
     private TextView textViewTimer;
+    private MediaPlayer correctSound;
+    private MediaPlayer wrongSound;
 
 
     @Override
@@ -44,6 +49,9 @@ public class LevelOne extends AppCompatActivity {
         buttonChoice3 = findViewById(R.id.buttonChoice3);
         questionCountTextView = findViewById(R.id.question_counter_l1);
         textViewTimer = findViewById(R.id.textViewTimer);
+        correctSound = MediaPlayer.create(this, R.raw.correct_answer);
+        wrongSound = MediaPlayer.create(this, R.raw.wrong_answer);
+
 
         // Receive time variable from previous activity
         Bundle extras = getIntent().getExtras();
@@ -80,21 +88,57 @@ public class LevelOne extends AppCompatActivity {
         buttonChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(Integer.parseInt(buttonChoice1.getText().toString()));
+                int selectedAnswer = Integer.parseInt(buttonChoice1.getText().toString());
+                if (selectedAnswer == correctAnswer) {
+                    playCorrectSound();
+                } else {
+                    playWrongSound();
+                }
+                // Add a delay of 500 milliseconds before checking the answer
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkAnswer(selectedAnswer);
+                    }
+                }, 500);
             }
         });
 
         buttonChoice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(Integer.parseInt(buttonChoice2.getText().toString()));
+                int selectedAnswer = Integer.parseInt(buttonChoice2.getText().toString());
+                if (selectedAnswer == correctAnswer) {
+                    playCorrectSound();
+                } else {
+                    playWrongSound();
+                }
+                // Add a delay of 500 milliseconds before checking the answer
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkAnswer(selectedAnswer);
+                    }
+                }, 500);
             }
         });
 
         buttonChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkAnswer(Integer.parseInt(buttonChoice3.getText().toString()));
+                int selectedAnswer = Integer.parseInt(buttonChoice3.getText().toString());
+                if (selectedAnswer == correctAnswer) {
+                    playCorrectSound();
+                } else {
+                    playWrongSound();
+                }
+                // Add a delay of 500 milliseconds before checking the answer
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkAnswer(selectedAnswer);
+                    }
+                }, 500);
             }
         });
 
@@ -228,4 +272,19 @@ public class LevelOne extends AppCompatActivity {
     private void updateQuestionCount() {
         questionCountTextView.setText("Question : " + questionCount);
     }
+
+    private void playCorrectSound() {
+        // Your code to play the correct sound
+        if (correctSound != null) {
+            correctSound.start();
+        }
+    }
+
+    private void playWrongSound() {
+        // Your code to play the wrong sound
+        if (wrongSound != null) {
+            wrongSound.start();
+        }
+    }
+
 }
